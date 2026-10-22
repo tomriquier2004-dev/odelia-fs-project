@@ -3,6 +3,45 @@
 
   @if (board(); as b) {
     <h2>{{ b.name }}</h2>
+
+    <section class="members">
+      <header class="members-header">
+        <h3>Members</h3>
+        <span class="muted">owner: {{ b.owner }}</span>
+      </header>
+
+      @if (members().length === 0) {
+        <p class="muted">Not shared with anyone yet.</p>
+      } @else {
+        <ul class="member-list">
+          @for (member of members(); track member.username) {
+            <li class="member">
+              <span>{{ member.username }}</span>
+              @if (isOwner()) {
+                <button
+                  type="button"
+                  class="remove"
+                  [attr.aria-label]="'Remove ' + member.username"
+                  (click)="removeMember(member)">×</button>
+              }
+            </li>
+          }
+        </ul>
+      }
+
+      @if (isOwner()) {
+        <form class="add-member" (ngSubmit)="addMember()">
+          <input
+            name="newMemberName"
+            [(ngModel)]="newMemberName"
+            placeholder="Share with username…"
+            autocomplete="off"
+            maxlength="120"
+            aria-label="Username to add" />
+          <button type="submit" [disabled]="!newMemberName.trim() || addingMember()">Add member</button>
+        </form>
+      }
+    </section>
   }
 
   @if (error()) {

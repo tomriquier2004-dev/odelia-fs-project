@@ -9,7 +9,13 @@
   margin-bottom: 1.5rem;
 }
 
-.new-board input {
+.rename {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.new-board input,
+.rename input {
   flex: 1;
   padding: 0.55rem 0.75rem;
   border: 1px solid #cbd5e1;
@@ -91,4 +97,18 @@ button.danger {
   background: #fee2e2;
   border-radius: 6px;
   padding: 0.6rem 0.8rem;
+}
+
+/* Tells a board the user owns apart from one that was shared with them. */
+.tag {
+  background: #e2e8f0;
+  color: #334155;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.tag.shared {
+  background: #dbeafe;
+  color: #1e40af;
 }

@@ -22,18 +22,40 @@
     <ul class="board-list">
       @for (board of boards(); track board.id) {
         <li class="board">
-          <div class="board-row">
-            <a class="board-name" [routerLink]="['/boards', board.id]">
-              {{ board.name }}
-            </a>
-            <span class="meta">
-              {{ board.owner }}
-              @if (board.createdAt) {
-                · {{ board.createdAt | date: 'short' }}
+          @if (editingBoardId() === board.id) {
+            <form class="rename" (ngSubmit)="saveRename(board)">
+              <input
+                #renameInput
+                name="renameDraft"
+                [(ngModel)]="renameDraft"
+                (keydown.escape)="cancelRename()"
+                aria-label="New board name"
+                autocomplete="off"
+                maxlength="120" />
+              <button type="submit" [disabled]="!renameDraft.trim() || renaming()">Save</button>
+              <button type="button" class="ghost" (click)="cancelRename()">Cancel</button>
+            </form>
+          } @else {
+            <div class="board-row">
+              <a class="board-name" [routerLink]="['/boards', board.id]">
+                {{ board.name }}
+              </a>
+              <span class="meta">
+                @if (owns(board)) {
+                  <span class="tag">Yours</span>
+                } @else {
+                  <span class="tag shared">Shared by {{ board.owner }}</span>
+                }
+                @if (board.createdAt) {
+                  · {{ board.createdAt | date: 'short' }}
+                }
+              </span>
+              @if (canManage(board)) {
+                <button class="ghost" type="button" (click)="startRename(board)">Rename</button>
+                <button class="danger" type="button" (click)="deleteBoard(board)">Delete</button>
               }
-            </span>
-            <button class="danger" type="button" (click)="deleteBoard(board)">Delete</button>
-          </div>
+            </div>
+          }
         </li>
       }
     </ul>

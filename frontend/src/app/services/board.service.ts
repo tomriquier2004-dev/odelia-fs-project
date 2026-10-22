@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { Board, BoardList, Card } from '../models/board';
+import { Board, BoardList, BoardMember, Card } from '../models/board';
 
 /**
  * Single entry point to the Kanban REST API.
@@ -37,6 +37,23 @@ export class BoardService {
 
   deleteBoard(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  /** The users a board is shared with; readable by anyone who can open it. */
+  getMembers(boardId: number): Observable<BoardMember[]> {
+    return this.http.get<BoardMember[]>(`${this.baseUrl}/${boardId}/members`);
+  }
+
+  /** Shares a board with another user. Owner-only: anyone else gets a 403. */
+  addMember(boardId: number, username: string): Observable<BoardMember> {
+    return this.http.post<BoardMember>(`${this.baseUrl}/${boardId}/members`, { username });
+  }
+
+  /** Stops sharing a board with one user. Owner-only, effective immediately. */
+  removeMember(boardId: number, username: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${boardId}/members/${encodeURIComponent(username)}`
+    );
   }
 
   getLists(boardId: number): Observable<BoardList[]> {
