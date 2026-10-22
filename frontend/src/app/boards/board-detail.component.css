@@ -252,3 +252,77 @@ h2 {
 .cards.cdk-drop-list-dragging .card:not(.cdk-drag-placeholder) {
   transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
 }
+
+/* Members panel: shown to everyone who can open the board, with the add and
+   remove controls only for its owner. */
+.members {
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+  max-width: 24rem;
+}
+
+.members-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.members-header h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.members-header .muted {
+  font-size: 0.8rem;
+}
+
+.member-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.add-member {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.add-member input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.add-member button {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.add-member button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
