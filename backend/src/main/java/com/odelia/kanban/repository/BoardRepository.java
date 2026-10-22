@@ -31,4 +31,10 @@ public interface BoardRepository extends CrudRepository<Board, Long> {
      * {@code owner} is the {@code preferred_username} taken from the JWT.
      */
     List<Board> findByOwnerOrderByNameAsc(String owner);
+
+    /**
+     * The boards with these identifiers - how the caller's memberships are
+     * turned into the boards shared with them. Never called with an empty list.
+     */
+    List<Board> findByIdIn(List<Long> ids);
 }
